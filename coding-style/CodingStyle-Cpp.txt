@@ -1,0 +1,55 @@
+Neon Armada: Endgame — C++ Coding Standard
+===========================================
+
+Purpose
+-------
+Reference agents use portable modern C++17 with no external libraries. The
+repository's .clang-format file is authoritative for formatting.
+
+Formatting and naming
+---------------------
+- Format C++ sources with clang-format. Use four spaces, no tabs, and an
+  88-character column limit.
+- Use snake_case for functions, variables, parameters, and file names.
+- Use PascalCase for types, classes, structs, and enums.
+- Use UPPER_SNAKE_CASE for constants and enumerators where appropriate.
+- Use .hpp for project headers and .cpp for source files.
+
+Headers and interfaces
+----------------------
+- Headers must be self-contained and include what they use.
+- Use include guards or #pragma once consistently within the agent.
+- Order includes: corresponding project header, project headers, standard-library
+  headers, then third-party headers if ever approved.
+- Keep implementation details in source files and expose the smallest practical
+  interface.
+
+Resource management and correctness
+-----------------------------------
+- Apply const correctness to values, methods, references, and pointers.
+- Use RAII for every resource, including streams and process-related handles.
+- Prefer standard-library containers and algorithms.
+- Use smart pointers only when ownership genuinely requires dynamic allocation;
+  document non-obvious ownership. Never use raw owning pointers.
+- Avoid manual new/delete, C-style casts, and undefined behavior.
+- Validate protocol input before use and surface failures explicitly.
+
+Errors, protocol, and cleanup
+-----------------------------
+- Use clear error reporting suitable for a command-line agent. Keep stdout
+  reserved for the approved protocol; diagnostics belong on the documented
+  diagnostic channel.
+- Flush protocol output when required by the approved protocol.
+- Do not emit extra output, depend on interactive input, or leave files and
+  resources unclosed.
+- Follow the approved engine-agent protocol exactly; do not infer unspecified
+  message shapes or recovery behavior.
+
+Warnings and tests
+------------------
+- Build with C++17 and the configured strict warning set. New warnings must be
+  resolved rather than suppressed without documented justification.
+- Add focused deterministic tests when C++ behavior is introduced. Test valid
+  protocol handling, invalid input, and error paths where relevant.
+- Do not rely on implementation-defined ordering, locale, wall-clock time, or
+  random state outside the documented seed.
