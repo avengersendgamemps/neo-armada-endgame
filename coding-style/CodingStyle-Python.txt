@@ -1,0 +1,65 @@
+Neon Armada: Endgame — Python Coding Standard
+==============================================
+
+Purpose
+-------
+This standard follows PEP 8 and modern Python practice. Ruff is the executable
+source of formatting and linting rules; its configured line length is 88.
+
+Formatting and naming
+---------------------
+- Use four spaces for indentation. Never use tabs for indentation.
+- Keep lines at or below 88 characters unless an approved formatter requires
+  otherwise.
+- Use snake_case for modules, functions, methods, parameters, and variables.
+- Use PascalCase for classes and UPPER_SNAKE_CASE for constants.
+- Prefer explicit, descriptive names over abbreviations.
+- Let Ruff format Python files. Do not hand-format against its output.
+
+Design and typing
+-----------------
+- Keep modules small and respect package boundaries.
+- Public functions, methods, and classes must have appropriate type hints.
+- Prefer immutable values and explicit data flow. Avoid unnecessary global
+  mutable state.
+- Keep the engine independent of PySide6 and other GUI code.
+- Integrate only through approved contracts; do not silently change a contract.
+- Prefer standard-library facilities before adding a dependency.
+
+Documentation and errors
+------------------------
+- Write docstrings for public modules, classes, and functions when their purpose,
+  behavior, parameters, returns, or errors are not obvious from types and names.
+- Raise specific exceptions with actionable messages. Catch only errors that can
+  be handled meaningfully; never use broad catches to hide failure.
+- Use logging, not print, for diagnostics in application code. Use module-level
+  loggers and avoid logging secrets, large payloads, or untrusted raw data.
+
+Determinism and simulation
+--------------------------
+- Engine behavior must be deterministic for equal approved inputs.
+- Use integer arithmetic for simulation state as required by the assignment.
+- Make ordering explicit when iterating over externally sourced or unordered
+  data. Do not depend on process timing, platform-specific behavior, or implicit
+  randomness.
+- Keep random generation behind a documented seed and contract boundary.
+
+Subprocess handling
+-------------------
+- Agents are external processes; do not import agent implementations into the
+  engine.
+- Use explicit argument lists, controlled working directories, timeouts, and
+  validated standard-stream data.
+- Preserve stdout for the protocol and keep diagnostics on the documented
+  channel. Always release pipes and terminate child processes according to the
+  approved runtime policy.
+
+Testing
+-------
+- Add focused pytest tests for new behavior and relevant failure paths.
+- Keep unit tests deterministic and independent of display servers, network
+  access, wall-clock time, and external agents unless an integration test
+  explicitly covers that boundary.
+- Place tests by intent: unit, integration, or determinism. Use maintained
+  fixtures only for stable, meaningful inputs.
+- Run the relevant pytest and Ruff checks before review.

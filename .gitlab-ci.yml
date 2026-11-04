@@ -1,0 +1,32 @@
+stages:
+  - quality
+  - test
+  - configure
+
+default:
+  interruptible: true
+
+python:lint:
+  stage: quality
+  image: python:3.11-slim
+  before_script:
+    - python -m pip install --upgrade pip
+    - python -m pip install -e ".[dev]"
+  script:
+    - python -m ruff check .
+    - python -m ruff format --check .
+
+python:test:
+  stage: test
+  image: python:3.11-slim
+  before_script:
+    - python -m pip install --upgrade pip
+    - python -m pip install -e ".[dev]"
+  script:
+    - python -m pytest
+
+cpp:configure:
+  stage: configure
+  image: kitware/cmake:latest
+  script:
+    - cmake -S agents/cpp -B build/cpp
