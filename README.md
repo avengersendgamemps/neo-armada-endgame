@@ -1,13 +1,11 @@
 # Neon Armada: Endgame
 
-**Team:** Avengers Endgame  
-**Status:** E00 — Project Foundation / initialization phase
+**Team:** Avengers Endgame
 
-Neon Armada: Endgame is a university software-engineering project based on the
-MPS Armada assignment. It will deliver a deterministic, two-player strategy
+Neon Armada: Endgame is a project based on the
+MPS Armada game. It will deliver a deterministic, two-player strategy
 simulation, externally executed reference agents, and a PySide6 desktop client
-for loading and replaying match histories. No gameplay features are implemented
-in this initialization phase.
+for loading and replaying match histories. 
 
 ## Technology stack
 
@@ -67,4 +65,11 @@ follow `feature/MPS-XXX-description`, `bugfix/MPS-XXX-description`,
   [test reports](docs/reports/test-report-template.md), and
   [architecture decisions](docs/architecture/decisions/template.md)
 
-The project remains in E00 until the coordinator approves this initialization.
+## Role Members
+    Ana Mardaloescu - Project Manager
+    George-Alexandru Apostolescu - Developer Lead
+    Diaconu Alexandru - Developer
+    Lentoiu Andrei - Developer
+    Zamfir Stefan - Developer
+    Moise Vlad-Ioan - Quality Assurance Engineer & Scrum Master
+    Corneliu Ganea - Quality Assurance Engineer
