@@ -1,7 +1,6 @@
 stages:
   - quality
   - test
-  - configure
 
 default:
   interruptible: true
@@ -16,17 +15,26 @@ python:lint:
     - python -m ruff check .
     - python -m ruff format --check .
 
-python:test:
+# Builds the C++ starter agent and runs the whole suite (unit, integration,
+# determinism, end-to-end). GUI tests run without a display through Qt's
+# "offscreen" platform; the system libraries below are what PySide6 needs for it.
+# The memory-limit test of the agent runtime uses RLIMIT_AS on Linux.
+tests:
   stage: test
   image: python:3.11-slim
+  variables:
+    QT_QPA_PLATFORM: offscreen
   before_script:
+    - apt-get update
+    - apt-get install -y --no-install-recommends g++ cmake make
+      libgl1 libegl1 libxkbcommon0 libfontconfig1 libdbus-1-3 libglib2.0-0
     - python -m pip install --upgrade pip
     - python -m pip install -e ".[dev]"
   script:
-    - python -m pytest
-
-cpp:configure:
-  stage: configure
-  image: kitware/cmake:latest
-  script:
     - cmake -S agents/cpp -B build/cpp
+    - cmake --build build/cpp
+    - python -m pytest --junitxml=report.xml
+  artifacts:
+    when: always
+    reports:
+      junit: report.xml
