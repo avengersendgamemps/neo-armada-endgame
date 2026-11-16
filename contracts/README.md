@@ -11,15 +11,15 @@ open.
 
 | Document | Boundary | Version | Status |
 | --- | --- | --- | --- |
-| [Game models](game-models.md) | Shared domain models, rules, fingerprint | 1 | APPROVED (frozen in L01) |
-| [Agent protocol](agent-protocol.md) | Engine ↔ agent standard streams | 1 | APPROVED (frozen in L01) |
-| [Engine CLI](engine-cli.md) | Client → engine process invocation | 1 | APPROVED (frozen in L01) |
-| [History format](history-format.md) | Engine output consumed by the client | 1 | APPROVED (frozen in L01) |
+| [Game models](game-models.md) | Shared domain models, rules, fingerprint | 1 | IMPLEMENTED (frozen in L01) |
+| [Agent protocol](agent-protocol.md) | Engine ↔ agent standard streams | 1 | IMPLEMENTED (frozen in L01) |
+| [Engine CLI](engine-cli.md) | Client → engine process invocation | 1 | IMPLEMENTED (frozen in L01) |
+| [History format](history-format.md) | Engine output consumed by the client | 1 | IMPLEMENTED (frozen in L01) |
 
 Status values: **DRAFT** (not usable), **APPROVED** (frozen, consumers may
 depend on it), **IMPLEMENTED** (all producers and consumers exist and pass the
-contract tests). The implementation status of each consumer is tracked in
-`docs/planning/roadmap.md`.
+contract tests). All four reached IMPLEMENTED with delivery L10; the evidence is
+in `docs/reports/test-report-L11.md`.
 
 > Approval note: the freeze was performed during the L01 delivery under the
 > coordinator's instruction to record under-specified values as team decisions.

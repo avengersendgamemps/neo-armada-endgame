@@ -1,7 +1,7 @@
 # Architecture Overview
 
-**Status:** E00 baseline. The interfaces named below are draft contracts, not
-implemented APIs.
+**Status:** implemented (deliveries L01–L12). This page is the short overview;
+the full design is in the [Software Design Document](SDD.md).
 
 Neon Armada is organized around a deterministic simulation engine, an
 external-agent runtime, a PySide6 desktop client, and independent reference
@@ -36,8 +36,8 @@ flowchart LR
   engine. Agents are never imported into the engine.
 - **Desktop client:** chooses local agent launch specifications and seed, invokes
   the engine through its CLI, then loads and plays the generated history.
-- **Reference agents:** independent Python and C++17 processes that implement
-  the documented protocol once it is approved.
+- **Agents:** independent Python and C++17 processes that implement the
+  documented protocol (starter kits, reference agent, team agent).
 
 ## Dependency direction
 
@@ -49,6 +49,5 @@ contract. The history reader and writer share only the approved history contract
 ## Integration boundaries
 
 The agent protocol, engine CLI, and history format are maintained under
-[`contracts/`](../../contracts/README.md). Their concrete versions are an E01
-decision. A history file is the durable handoff from an engine match to visual
+[`contracts/`](../../contracts/README.md), all at version 1. A history file is the durable handoff from an engine match to visual
 playback, enabling the client to remain independent while a match executes.
