@@ -47,6 +47,7 @@ The reference match takes under a second, so use a slow agent to have time. Crea
 
 ```python
 import json, sys, time
+
 for raw in sys.stdin:
     message = json.loads(raw)
     if message["type"] == "init":
@@ -55,7 +56,12 @@ for raw in sys.stdin:
         break
     else:
         time.sleep(0.04)
-        reply = {"type": "commands", "tick": message["tick"], "moves": [], "build": False}
+        reply = {
+            "type": "commands",
+            "tick": message["tick"],
+            "moves": [],
+            "build": False,
+        }
     sys.stdout.write(json.dumps(reply) + "\n")
     sys.stdout.flush()
 ```
