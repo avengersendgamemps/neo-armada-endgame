@@ -83,6 +83,7 @@ class MatchPresentation:
         self.history = history
         # Raises HistoryError if the events cannot be applied.
         self._states: list[MatchState] = reconstruct_states(history)
+        self._frames: dict[int, FrameView] = {}  # frames are immutable: built once
         self._max_energy = max(
             (cell.energy for cell in history.initial_state.energy), default=1
         )
@@ -108,6 +109,12 @@ class MatchPresentation:
         """Return the frame after ``tick`` ticks (0 = initial state)."""
         if not 0 <= tick <= self.last_tick:
             raise IndexError(f"tick {tick} is outside 0..{self.last_tick}")
+        frame = self._frames.get(tick)
+        if frame is None:
+            frame = self._frames[tick] = self._build_frame(tick)
+        return frame
+
+    def _build_frame(self, tick: int) -> FrameView:
         history = self.history
         state = self._states[tick]
         if tick == 0:

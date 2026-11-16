@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import time
+
 from PySide6.QtCore import QPointF, QRectF, Qt
 from PySide6.QtGui import QColor, QPainter, QPaintEvent, QPen, QPixmap
 from PySide6.QtWidgets import QWidget
@@ -47,6 +49,8 @@ class MapView(QWidget):
         self._terrain: QPixmap | None = None
         self._terrain_key: tuple | None = None
         self.frames_painted = 0
+        # Set to a list to record the time of every paint (FPS measurement).
+        self.paint_log: list[float] | None = None
 
     def set_frame(
         self,
@@ -97,6 +101,8 @@ class MapView(QWidget):
         self._paint_ships(painter, frame, cell, left, top)
         painter.end()
         self.frames_painted += 1
+        if self.paint_log is not None:
+            self.paint_log.append(time.perf_counter())
 
     def _terrain_pixmap(self, frame: FrameView) -> QPixmap:
         """Static layer (cells, obstacles, grid, bases), cached per map and size."""

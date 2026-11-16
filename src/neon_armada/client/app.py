@@ -17,7 +17,7 @@ from neon_armada.client.main_window import MainWindow
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="python -m neon_armada.client",
-        description="Neon Armada desktop client: match history viewer.",
+        description="Neon Armada desktop client: match history viewer and replay.",
     )
     parser.add_argument("history", nargs="?", help="history file to open at start")
     parser.add_argument("--tick", type=int, default=0, help="tick to show first")
