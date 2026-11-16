@@ -1,0 +1,57 @@
+[
+  {
+    "case": "not json",
+    "line": "hello",
+    "expect": "malformed"
+  },
+  {
+    "case": "not an object",
+    "line": "[1,2]",
+    "expect": "malformed"
+  },
+  {
+    "case": "wrong type",
+    "line": "{\"type\":\"ready\",\"protocol_version\":1}",
+    "expect": "malformed"
+  },
+  {
+    "case": "missing tick",
+    "line": "{\"type\":\"commands\",\"moves\":[]}",
+    "expect": "malformed"
+  },
+  {
+    "case": "boolean tick",
+    "line": "{\"type\":\"commands\",\"tick\":true,\"moves\":[]}",
+    "expect": "malformed"
+  },
+  {
+    "case": "missing moves",
+    "line": "{\"type\":\"commands\",\"tick\":1}",
+    "expect": "malformed"
+  },
+  {
+    "case": "moves not array",
+    "line": "{\"type\":\"commands\",\"tick\":1,\"moves\":{}}",
+    "expect": "malformed"
+  },
+  {
+    "case": "build not boolean",
+    "line": "{\"type\":\"commands\",\"tick\":1,\"moves\":[],\"build\":1}",
+    "expect": "malformed"
+  },
+  {
+    "case": "future tick",
+    "line": "{\"type\":\"commands\",\"tick\":2,\"moves\":[]}",
+    "expect": "malformed"
+  },
+  {
+    "case": "stale tick",
+    "line": "{\"type\":\"commands\",\"tick\":0,\"moves\":[]}",
+    "expect": "stale"
+  },
+  {
+    "case": "truncated",
+    "line": "{\"type\":\"commands\",\"tick\":1,\"moves\":[",
+    "expect": "malformed"
+  }
+]

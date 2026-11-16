@@ -1,0 +1,9 @@
+{
+  "type": "end",
+  "reason": "finished",
+  "winner": 1,
+  "scores": [
+    500,
+    1000
+  ]
+}

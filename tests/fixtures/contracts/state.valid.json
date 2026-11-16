@@ -1,0 +1,51 @@
+{
+  "state": {
+    "tick": 2,
+    "reserves": [
+      500,
+      1000
+    ],
+    "move_budgets": [
+      999,
+      999
+    ],
+    "pending_builds": [
+      true,
+      false
+    ],
+    "invalid_commands": [
+      0,
+      1
+    ],
+    "next_ship_id": 2,
+    "ships": [
+      {
+        "id": 0,
+        "owner": 0,
+        "x": 4,
+        "y": 4,
+        "cargo": 0
+      },
+      {
+        "id": 1,
+        "owner": 1,
+        "x": 27,
+        "y": 27,
+        "cargo": 0
+      }
+    ],
+    "energy": [
+      [
+        10,
+        2,
+        350
+      ],
+      [
+        21,
+        29,
+        350
+      ]
+    ]
+  },
+  "fingerprint": "71402237c052d8cc88a7cdc1f115cd423e76cf5580bb8616cb94744f215b9d4a"
+}

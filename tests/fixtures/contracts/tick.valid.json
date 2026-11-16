@@ -1,0 +1,44 @@
+{
+  "type": "tick",
+  "tick": 1,
+  "reserves": [
+    1000,
+    1000
+  ],
+  "move_budgets": [
+    1000,
+    1000
+  ],
+  "pending_builds": [
+    false,
+    false
+  ],
+  "ships": [
+    {
+      "id": 0,
+      "owner": 0,
+      "x": 3,
+      "y": 4,
+      "cargo": 0
+    },
+    {
+      "id": 1,
+      "owner": 1,
+      "x": 28,
+      "y": 27,
+      "cargo": 0
+    }
+  ],
+  "energy": [
+    [
+      10,
+      2,
+      350
+    ],
+    [
+      21,
+      29,
+      350
+    ]
+  ]
+}

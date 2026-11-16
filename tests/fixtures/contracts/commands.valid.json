@@ -1,0 +1,11 @@
+{
+  "type": "commands",
+  "tick": 1,
+  "moves": [
+    {
+      "ship": 0,
+      "action": "E"
+    }
+  ],
+  "build": false
+}
