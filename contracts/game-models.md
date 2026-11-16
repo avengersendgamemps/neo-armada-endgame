@@ -266,3 +266,59 @@ Timestamps, paths, process ids, agent names and timing data are never hashed.
 `from_dict` constructors raise `ContractError` (a `ValueError`) with a message
 that names the offending field. Booleans are not accepted where integers are
 required. Unknown keys are ignored for forward compatibility.
+
+## 9. Map generator (`GENERATOR_VERSION = 1`)
+
+**Python source of truth:** `src/neon_armada/engine/world/rng.py`,
+`src/neon_armada/engine/world/generator.py`.
+
+**[Official]** The map is generated from the integer seed by an algorithm fixed
+in the contract; one half is produced and mirrored or rotated for the other
+player; after generation the engine checks by traversal that every deposit can
+be reached from both bases; otherwise a new map is generated deterministically
+from a derived seed. The same seed always produces the same map.
+Everything below is a **team decision, not from the official spec**.
+
+### 9.1 PRNG
+
+SplitMix64 over unsigned 64-bit integers, state initialised with the seed:
+
+```text
+state = (state + 0x9E3779B97F4A7C15) mod 2^64
+z = state
+z = ((z xor (z >> 30)) * 0xBF58476D1CE4E5B9) mod 2^64
+z = ((z xor (z >> 27)) * 0x94D049BB133111EB) mod 2^64
+next = z xor (z >> 31)
+below(n) = next mod n
+mix64(v) = first output of a generator seeded with v
+```
+
+### 9.2 Derived seeds and retry policy
+
+`map_seed(seed, 0) = seed`; for attempt `k ≥ 1`:
+`map_seed(seed, k) = mix64(seed xor mix64(k))`. Attempts `0, 1, 2, …` are tried
+in order and the first valid candidate is used. After `100` invalid candidates
+generation fails (`MapGenerationError`, CLI exit code 4). The accepted
+`map_seed` and attempt index are stored in the history header.
+
+### 9.3 Candidate algorithm
+
+For side `size` and PRNG seeded with `map_seed`, with constants obstacle `12 %`,
+deposit `6 %`, deposit energy `50 … 500`:
+
+1. `base0 = (1 + below(size div 4), 1 + below(size div 4))` (x drawn first);
+   `base1` is its 180° rotation `(size − 1 − x, size − 1 − y)`.
+2. Visit the first `(size · size) div 2` cells in row-major order (for an odd
+   side the centre cell is never visited and stays empty). A cell within
+   Chebyshev distance 1 of either base stays empty and draws nothing.
+   Otherwise `roll = below(100)`: `roll < 12` → obstacle; `roll < 18` →
+   deposit with energy `50 + below(451)`; else empty. The same kind and energy
+   are written to the rotated partner cell.
+3. The base cells are written last.
+
+### 9.4 Validity
+
+A candidate is valid when it contains at least one deposit and, for each
+player, a breadth-first search from the player's base over 4-neighbour moves —
+not entering obstacles or the opponent's base (ships can never enter either) —
+reaches every deposit cell.
